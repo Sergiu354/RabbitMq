@@ -1,0 +1,12 @@
+FROM rabbitmq:3.10-management
+RUN apt-get update -y && apt-get install wget -y && \
+    wget https://github.com/rabbitmq/rabbitmq-delayed-message-exchange/releases/download/3.10.2/rabbitmq_delayed_message_exchange-3.10.2.ez && \
+    mv rabbitmq_delayed_message_exchange-3.10.2.ez  plugins/ && \
+    rabbitmq-plugins enable rabbitmq_delayed_message_exchange
+
+ENV RABBITMQ_DEFAULT_USER admin
+ENV RABBITMQ_DEFAULT_PASS admin
+ENV RABBITMQ_DEFAULT_VHOST internal
+
+EXPOSE 15672 5672
+CMD ["rabbitmq-server"]
